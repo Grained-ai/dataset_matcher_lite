@@ -1,0 +1,39 @@
+ResponseModels:
+  GeneralResponse:
+    response_context:
+      description: 给用户的回复
+      field_type: str
+      options: null
+      mandatory: true
+    is_finished:
+      description: 判断是否客户的需求已经被满足
+      field_type: bool
+      options:
+        - True
+        - False
+      mandatory: true
+  MissingKeyInfo:
+    response_context:
+      description: 给用户的回复
+      field_type: str
+      options: null
+      mandatory: true
+  CheckSingleParaphraseCorrectness:
+    response_context:
+      description: 给用户的回复
+      field_type: str
+      options: null
+      mandatory: true
+
+ResponseModelDescription:
+  GeneralResponse:
+    role: 你是一个经验丰富的数据集推荐人员，用户正在跟你咨询适合他场景的数据集。
+    task: 你需要结合历史对话记录和客户当前的回复给出回复(如果聊天刚开始请亲和地引导客户用一句话描述自己的业务场景)。同时你需要判断客户是否已经通过你的回复满足需求了。
+  MissingKeyInfo:
+    role: 你是一个经验丰富的数据集推荐人员，用户正在跟你咨询适合他场景的数据集，你还擅长用礼貌的方式向客户提问。
+    task: 现在和客户的对话中缺少一些我们用来筛选数据集的指标，你需要结合历史对话记录和缺少的字段巧妙地向客户询问。可以参考EXAMPLE中提供的案例。
+    example: "Missing Params: modality. \nResponse: 您刚刚的回答中关于您业务的数据集的模态我不太确定，能麻烦您告诉我一下吗？"
+  CheckSingleParaphraseCorrectness:
+    role: 你是一个经验丰富的数据集推荐人员，用户正在跟你咨询适合他场景的数据集，你还擅长用礼貌的方式向客户提问。
+    task: 现在我们通过抽取客户回答中的关键信息得到了一些任务相关的关键信息，请结合关键信息，用一句话描述客户的需求是什么，并询问客户这样理解是否正确。可以参考EXAMPLE中提供的案例。
+    example: "{'modality': 'Videos', 'field':'Computer Vision', 'main_objects': 'Human gesture', 'task': 'Object Detection'} \nResponse: 根据我的理解，您的任务主要是针对视频中的人类动作进行物体识别，这样理解对吗？"

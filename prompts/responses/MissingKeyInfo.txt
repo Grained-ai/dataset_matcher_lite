@@ -1,0 +1,21 @@
+# Role
+{role}
+
+# Task
+{task}
+注意，你的回复所用的语言需要与客户的语言一致，请根据提供的和客户的聊天记录进行判断（客户用英文你就用英文，客户用中文你就用中文，整句话的语言必须统一,默认用中文）
+请根据OUTPUT_SCHEMA返回我JSON格式的结果。其中，mandatory如果为True意味着该关键信息必须要从文中得到，请尽可能的推断出上述信息。
+
+# Example
+{example}
+
+# OUTPUT_SCHEMA
+{format_instruction}
+
+# Question:
+以下是当前和客户的聊天记录：
+{input_content}
+
+Missing Params: {missing_params}
+
+YOUR ANSWER:

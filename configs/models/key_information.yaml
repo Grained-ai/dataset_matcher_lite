@@ -1,0 +1,245 @@
+KIModels:
+  PersonalInfo:
+    name:
+      description: 用户的名字，如何称呼
+      field_type: str
+      options: null
+      mandatory: false
+    person_corp:
+      description: 用户的需求是来自个人还是组织，如果很难判断选择Unknown
+      field_type: str
+      options:
+        - Personal
+        - Corporation
+        - Unknown
+    email:
+      description: 用户的邮箱
+      field_type: str
+      options: null
+      mandatory: false
+    phone:
+      description: 用户的电话联系方式，手机或者固定电话，优先手机
+      field_type: str
+      options: null
+      mandatory: true
+
+  TaskOrientedInfo:
+    field:
+      description: 用户正在进行的任务的领域
+      field_type: str
+      options:
+        - Multimodal
+        - Computer Vision
+        - Natural Language Processing
+        - Audio
+        - Tabular
+        - Reinforcement Learning
+        - Other
+      mandatory: true
+    modality:
+      description: 用户正在进行的任务用到的数据集数据所涉及的模态
+      field_type: str
+      options:
+        - "Images"
+        - "Texts"
+        - "Videos"
+        - "Audio"
+        - "Medical"
+        - "3D"
+        - "Graphs"
+        - "Time series"
+        - "Tabular"
+        - "Speech"
+        - "RGB-D"
+        - "Environment"
+        - "Point cloud"
+        - "Biomedical"
+        - "LiDAR"
+        - "RGB Video"
+        - "Tracking"
+        - "3D meshes"
+        - "Biology"
+        - "Actions"
+        - "Stereo"
+        - "Tables"
+        - "Music"
+        - "EEG"
+        - "Hyperspectral images"
+        - "MRI"
+        - "Interactive"
+        - "Physics"
+        - "Dialog"
+        - "Midi"
+        - "6D"
+        - "Ranking"
+        - "Replay data"
+        - "fMRI"
+        - "CAD"
+        - "Financial"
+        - "Parallel"
+        - "Lyrics"
+        - "PSG"
+      mandatory: true
+    main_objects:
+      description: 用户正在进行的任务用到的数据集数据包含的主要实体是什么
+      field_type: str
+      options: null
+      mandatory: true
+    task:
+      description: 用户正在进行的任务的任务类型
+      field_type: str
+      options:
+#        - Visual Question Answering
+#        - Video-Text-to-Text
+#        - Depth Estimation
+#        - Image Classification
+#        - Object Detection
+#        - Image Segmentation
+#        - Text-to-Image
+#        - Image-to-Image
+#        - Image-to-Video
+#        - Unconditional Image Generation
+#        - Video Classification
+#        - Text-to-Video
+#        - Zero-Shot Image Classification
+#        - Mask Generation
+#        - Zero-Shot Object Detection
+#        - Text-to-3D
+#        - Image-to-3D
+#        - Image Feature Extraction
+#        - Text Classification
+#        - Token Classification
+#        - Table Question Answering
+#        - Question Answering
+#        - Zero-Shot Classification
+#        - Translation
+#        - Summarization
+#        - Feature Extraction
+#        - Text Generation
+#        - Text2Text Generation
+#        - Fill-Mask
+#        - Sentence Similarity
+#        - Table to Text
+#        - Multiple Choice
+#        - Text Retrieval
+#        - Text-to-Speech
+#        - Text-to-Audio
+#        - Automatic Speech Recognition
+#        - Audio-to-Audio
+#        - Audio Classification
+#        - Voice Activity Detection
+#        - Tabular Classification
+#        - Tabular Regression
+#        - Tabular to Text
+#        - Time Series Forecasting
+#        - Reinforcement Learning
+#        - Robotics
+#        - Graph Machine Learning
+#        - Other
+        - Question Answering
+        - Semantic Segmentation
+        - Object Detection
+        - Image Classification
+        - Language Modelling
+        - Classification
+        - Text Classification
+        - Text Generation
+        - Named Entity Recognition (NER)
+        - Visual Question Answering (VQA)
+        - Pose Estimation
+        - Anomaly Detection
+        - Action Recognition
+        - Sentiment Analysis
+        - Reading Comprehension
+        - Instance Segmentation
+        - Domain Adaptation
+        - Text Summarization
+        - Speech Recognition
+        - Information Retrieval
+        - Image Retrieval
+        - Machine Translation
+        - Natural Language Inference
+        - Relation Extraction
+        - Depth Estimation
+        - Image Captioning
+        - Image Generation
+        - Node Classification
+        - 2D Object Detection
+        - Natural Language Understanding
+        - 2D Semantic Segmentation
+        - Autonomous Driving
+        - Link Prediction
+        - Face Recognition
+        - Data Augmentation
+        - Object Tracking
+        - Person Re-Identification
+        - 3D Object Detection
+        - Multi-Task Learning
+        - Recommendation Systems
+        - 3D Reconstruction
+        - Common Sense Reasoning
+        - Code Generation
+        - Word Embeddings
+        - Abstractive Text Summarization
+        - 3D Human Pose Estimation
+        - Graph Classification
+        - Emotion Recognition
+        - Video Understanding
+        - Medical Image Segmentation
+        - Few-Shot Learning
+        - Optical Character Recognition (OCR)
+        - Coreference Resolution
+        - Knowledge Graphs
+        - Semantic Parsing
+        - Hate Speech Detection
+        - Machine Reading Comprehension
+        - Scene Understanding
+        - Zero-Shot Learning
+        - Object Recognition
+        - Self-Supervised Learning
+        - Temporal Action Localization
+        - Visual Reasoning
+        - Image Clustering
+        - Image Super-Resolution
+        - Entity Linking
+        - Misinformation Detection
+        - Face Detection
+        - Decision Making
+        - Fine-Grained Image Classification
+        - Multi-Object Tracking
+        - 3D Semantic Segmentation
+        - Audio Classification
+        - Video Captioning
+        - 3D Pose Estimation
+        - Novel View Synthesis
+        - Trajectory Prediction
+        - Video Question Answering
+        - Action Detection
+        - Optical Flow Estimation
+        - Panoptic Segmentation
+        - Stance Detection
+        - Continual Learning
+        - Dialogue Generation
+        - Monocular Depth Estimation
+        - Retrieval
+        - Time Series Forecasting
+        - Unsupervised Domain Adaptation
+        - Video Retrieval
+        - Image Segmentation
+        - Metric Learning
+      mandatory: true
+
+
+Classification:
+  TrueOrFalse:
+    TrueOrFalse:
+      description: 判断是否，返回True或者False
+      field_type: bool
+      options:
+        - True
+        - False
+      mandatory: true
+    Reason:
+      description: 做出该判断的原因
+      field_type: str
+      mandatory: true

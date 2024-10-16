@@ -1,0 +1,7 @@
+LLM:
+  endpoint: https://open.bigmodel.cn/api/paas/v4/
+  llm_params:
+    model_name: glm-4-flash
+    api_token: a9d2815b090f143cdac247d7600a127f.WSDK8WqwJzZtCmBK
+WEB:
+  port: 6164
