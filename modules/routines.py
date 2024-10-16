@@ -45,7 +45,7 @@ class Routines(Enum):
         else:
             return None
 
-    def think(self, kie_extractor_ins, chat_history):
+    def think(self, kie_extractor_ins, chat_history, param_dict=None):
         goto_sub_task = Routines.IDLE
         if self == Routines.IfSingleDescriptionCorrect:
             key_info, missing_key = kie_extractor_ins.classify(classify_type="TrueOrFalse",

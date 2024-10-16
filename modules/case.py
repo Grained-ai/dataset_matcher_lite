@@ -1,7 +1,7 @@
 import json
 import time
 from datetime import datetime
-from typing import Union, Optional, List
+from typing import Union, Optional, List, Dict
 from pathlib import Path
 from modules.chat_handler import ChatHandler
 from modules.kie_information_extractor import KIExtractor
@@ -34,17 +34,26 @@ class Case(Singleton):
             self.initialize_case()
 
     @property
-    def todo_routines(self):
-        for r_t in self.status[::-1]:
-            if 'TODO' in [r_t['routines'][i] for i in r_t['routines'].keys()]:
-                return r_t['routines']
+    def todo_pointer(self):
+        _status = self.status.copy()
+        count = len(_status)
+        for d_runtime in self.status[::-1]:
+            count -= 1
+            if 'TODO' in [d_runtime['routines'][d_routine['status']] for d_routine in d_runtime['routines']]:
+                return count
+
+    # @property
+    # def todo_routines(self) -> List:
+    #     for d_runtime in self.status[::-1]:
+    #         if 'TODO' in [d_runtime['routines'][d_routine['status']] for d_routine in d_runtime['routines']]:
+    #             return d_runtime['routines']
 
     def initialize_case(self):
         logger.info(f'Starts to initialize case: {self.case_id}.')
-        self.register_routine([Routines(0)])
+        self.register_routines([Routines(0)])
         logger.success(f'Case: {self.case_id} initialized.')
 
-    def load_status(self) -> list:
+    def load_status(self) -> List:
         status_path = self.__case_storage_base / 'status.json'
         if status_path.exists():
             with open(status_path, 'r', encoding='utf-8') as f:
@@ -60,8 +69,9 @@ class Case(Singleton):
             json.dump(self.status, f, ensure_ascii=False, indent=4)
         logger.success("Current status updated.")
 
-    def register_routine(self, goto_routines: List[Routines]):
-        todo_runtimes = {'routines': {i.name: 'TODO' for i in goto_routines}}
+    def register_routines(self, goto_routines: List[Routines], params: Union[List[Dict], None]):
+        todo_runtimes = {'routines': [{'name': routine.name, 'params': param, 'status': 'TODO'}
+                                      for routine, param in zip(goto_routines, params)]}
         self.status.append(todo_runtimes)
         logger.warning(f"ROUTINES ON SCHEDULE: {json.dumps(todo_runtimes, ensure_ascii=False, indent=2)}")
         return todo_runtimes
@@ -80,20 +90,24 @@ class Case(Singleton):
         raw_results = {}
         routines = {}
         not_finished_routines = []
-        for routine_name in self.todo_routines:
-            if self.todo_routines[routine_name] == 'TODO':
+        for d_routine in self.status[self.todo_pointer]:
+            routine_name = d_routine['name']
+            routine_status = d_routine['status']
+            routine_params = d_routine['params']
+            if routine_status == 'TODO':
                 routine = Routines[routine_name]
 
                 key_info, missing_key, is_finished, goto_routine = routine.think(
                     kie_extractor_ins=self.__kie_extractor,
-                    chat_history=self.__chat_handler.chat_history)
+                    chat_history=self.__chat_handler.chat_history,
+                    param_dict=routine_params)
 
                 current_filter.update(key_info)
-                raw_results[routine_name] = {'key_info': key_info,
-                                             'missing_key': missing_key,
-                                             'is_finished': is_finished,
-                                             'goto_routine_name': goto_routine.name}
-                routines[routine_name] = 'DONE'
+                routine_run_result = {'key_info': key_info,
+                                      'missing_key': missing_key,
+                                      'is_finished': is_finished,
+                                      'goto_routine_name': goto_routine.name}
+
                 if not is_finished:
                     not_finished_routines.append([Routines[routine_name], {"missing_params": missing_key}])
 
@@ -103,13 +117,11 @@ class Case(Singleton):
                                 'raw_result_data': raw_results})
         return not_finished_routines
 
-
     def display_current_phase(self):
         logger.warning(f"Detailed status: {json.dumps(self.status, indent=4, ensure_ascii=False)}")
 
     def __call__(self, message_text):
         logger.info(f"Received user message: {message_text}")
         self.add_chat(message_text)
-        self.take_action()
+        not_finished_routines = self.take_action()
         self.display_current_phase()
-        self.response_chat()
