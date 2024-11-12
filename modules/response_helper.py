@@ -52,6 +52,7 @@ class ResponseHelper:
         return create_model(model_name, **field_definitions)
 
     def generate_response(self, response_type, chat_history: BaseChatMessageHistory, extra_note=None, **kwargs):
+        logger.info(f"Tried to generate {response_type} ResponseText")
         if response_type not in self.response_types:
             raise Exception(f"Failed to generate response_type: {response_type}. Supports: {self.response_types}")
         prompt_path = self.prompt_base / f'{response_type}.txt'
@@ -83,7 +84,7 @@ class ResponseHelper:
 
         if extra_note:
             prompt = '\n\n'.join([prompt, f"Note: {extra_note}"])
-        logger.debug(prompt)
+        # logger.debug(prompt)
         res_raw = llm_ins.invoke(prompt)
         res_content = res_raw.content
         answer_instance = retry_parser.parse(res_content)

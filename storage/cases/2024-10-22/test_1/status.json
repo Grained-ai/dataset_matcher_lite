@@ -1,0 +1,36 @@
+[
+    {
+        "routines": [
+            {
+                "name": "Greeting",
+                "params": null,
+                "status": "DONE"
+            }
+        ],
+        "filter": {},
+        "msg": null,
+        "raw_result_data": [
+            {
+                "routine": "Greeting",
+                "key_info": null,
+                "missing_key": null,
+                "is_finished": true,
+                "goto_routine_name": "IDLE"
+            }
+        ]
+    },
+    {
+        "routines": [
+            {
+                "name": "TaskOrientedInfo",
+                "params": null,
+                "status": "TODO"
+            },
+            {
+                "name": "TaskSummarization",
+                "params": null,
+                "status": "TODO"
+            }
+        ]
+    }
+]

@@ -229,6 +229,12 @@ KIModels:
         - Metric Learning
       mandatory: true
 
+  TaskSummarization:
+    one_sentence_description:
+      description: 用一句话完整描述用户的业务场景
+      field_type: str
+      mandatory: true
+
 
 Classification:
   TrueOrFalse:

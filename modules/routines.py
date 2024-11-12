@@ -31,11 +31,11 @@ class Routines(Enum):
             return None
 
     def response_context(self, chat_handler, is_finished=False, **kwargs):
-        # TODO 决定什么时候说什么
         if self == Routines.Greeting:
-            response_context, is_finished = chat_handler.generate_general_response()
-            return response_context
-
+            if not is_finished:
+                response_context = chat_handler.generate_greeting()
+                return response_context
+            return None
         elif self == Routines.TaskOrientedInfo:
             if not is_finished:
                 response_context = chat_handler.generate_task_related_query_response(
@@ -59,8 +59,13 @@ class Routines(Enum):
                                                               chat_input=chat_history)
             is_finished = self.is_finished(key_info=key_info,
                                            missing_key=missing_key)
-            goto_sub_task = Routines.IfSingleDescriptionCorrect if not is_finished else Routines.TaskOrientedInfo
-        elif self in [Routines.PersonalInfo]:
+            # goto_sub_task = Routines.IfSingleDescriptionCorrect if not is_finished else Routines.TaskOrientedInfo
+        # elif self == Routines.TaskSummarization:
+        #     key_info, missing_key = kie_extractor_ins.extract(key_information_name=self.name,
+        #                                                       chat_input=chat_history)
+        #     is_finished = self.is_finished(key_info=key_info,
+        #                                    missing_key=missing_key)
+        elif self in [Routines.PersonalInfo, Routines.TaskSummarization, Routines.TaskSummarization]:
             key_info, missing_key = kie_extractor_ins.extract(key_information_name=self.name,
                                                               chat_input=chat_history)
             is_finished = self.is_finished(key_info=key_info,

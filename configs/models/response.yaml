@@ -1,4 +1,10 @@
 ResponseModels:
+  Greeting:
+    response_context:
+      description: 给用户的回复
+      field_type: str
+      options: null
+      mandatory: true
   GeneralResponse:
     response_context:
       description: 给用户的回复
@@ -26,6 +32,9 @@ ResponseModels:
       mandatory: true
 
 ResponseModelDescription:
+  Greeting:
+    role: 你是一个经验丰富的数据集推荐人员，用户正在跟你咨询适合他场景的数据集。
+    task: 你需要用一句话引导客户用一句话描述自己的业务场景。
   GeneralResponse:
     role: 你是一个经验丰富的数据集推荐人员，用户正在跟你咨询适合他场景的数据集。
     task: 你需要结合历史对话记录和客户当前的回复给出回复(如果聊天刚开始请亲和地引导客户用一句话描述自己的业务场景)。同时你需要判断客户是否已经通过你的回复满足需求了。

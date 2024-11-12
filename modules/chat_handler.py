@@ -19,7 +19,7 @@ class ChatHandler:
             (Path(__file__).parent.parent / 'storage' / 'cases' / datetime.datetime.now().strftime('%Y-%m-%d')
              / case_id / 'chats')
         os.makedirs(self.__chat_storage_base, exist_ok=True)
-        self.__current_chat_history = []
+        self.start_conversation()
         self.__reply_proxy_type = reply_proxy_type
         if reply_proxy_type == 'Feishu':
             config_yaml_path = kwargs.get('config_yaml_path', None)
@@ -30,6 +30,16 @@ class ChatHandler:
             logger.error(f"reply_proxy_type: {reply_proxy_type} not supported. Will use default logger reply mode.")
 
         self.__response_helper = ResponseHelper(llm_config)
+
+    def generate_greeting(self, auto_send=False):
+        response_dict = self.__generate_response('Greeting')
+        response_context = response_dict.get("response_context")
+        if auto_send:
+            self.reply(message_content=response_context)
+            self.add_chat_history(role='AI',
+                                  content=response_context)
+            logger.debug(response_context)
+        return response_context
 
     def generate_general_response(self, auto_send=False):
         response_dict = self.__generate_response('GeneralResponse')
